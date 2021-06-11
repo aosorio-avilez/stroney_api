@@ -1,0 +1,61 @@
+name: Test
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - master
+      - feature/*
+      - bug/*
+      - hotfix/*
+
+jobs:
+  tests:
+    name: Run tests
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4'
+        coverage: xdebug
+    
+    - name: Cache composer dependencies
+      uses: actions/cache@v1
+      with:
+        path: vendor
+        key: composer-${{ hashFiles('composer.lock') }}
+
+    - name: Install dependencies
+      run: |
+        php --version
+        composer install -n --prefer-dist
+    
+    - name: Boot Laravel application
+      run: |
+        cp .env.github .env
+        php artisan --version
+        php artisan key:generate
+
+    - name: Create Database
+      run: |
+        mkdir -p database
+        touch database/database.sqlite
+
+    - name: Migrate database
+      env:
+        DB_CONNECTION: sqlite
+        DB_DATABASE: database/database.sqlite
+      run: |
+        mysql --version
+        php artisan migrate:fresh --seed
+
+    - name: Run tests
+      env:
+        DB_CONNECTION: sqlite
+        DB_DATABASE: database/database.sqlite
+      run: |
+        ./vendor/bin/phpunit --version
+        php artisan test --parallel --coverage-html coverage/

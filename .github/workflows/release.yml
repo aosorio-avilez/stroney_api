@@ -1,0 +1,69 @@
+name: Release
+
+on: 
+  push:
+    tags:
+      - "*"
+
+jobs:
+  deploy:
+    name: Create Release
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4'
+
+    - name: Cache Composer Dependencies
+      uses: actions/cache@v1
+      with:
+        path: vendor
+        key: composer-${{ hashFiles('composer.lock') }}
+
+    - name: Install Dependencies
+      run: |
+        php --version
+        composer install --optimize-autoloader --no-dev
+        php artisan config:cache
+        php artisan route:cache
+        php artisan view:cache
+
+    - name: Create Environment File
+      uses: 1arp/create-a-file-action@0.2
+      with:
+        file: '.env'
+        content: ${{ secrets.ENV }}
+
+    - name: Extract Tag Name
+      run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ env.TAG_NAME }}
+        release_name: Release ${{ env.TAG_NAME }}
+        draft: false
+        prerelease: false
+
+    - name: Build Realease Artifact
+      run: zip -rq ${{ env.TAG_NAME }}.zip .ebextensions .platform app bootstrap config database public resources routes storage tests vendor .env artisan composer.json
+
+    - name: Upload Release Artifact
+      id: upload-release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./${{ env.TAG_NAME }}.zip
+        asset_name: ${{ env.TAG_NAME }}.zip
+        asset_content_type: application/zip
+
+
+        
