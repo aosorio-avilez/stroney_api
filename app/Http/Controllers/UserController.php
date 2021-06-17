@@ -27,4 +27,11 @@ class UserController extends Controller
 
         return jsonResponse(200, $resource->toArray());
     }
+
+    public function revokeAccess(Request $request): JsonResponse
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return jsonResponse(204);
+    }
 }
