@@ -10,15 +10,13 @@ trait Authenticable
 {
     protected User $user;
 
-    public function buildAuthUser(?Profile $profile = null)
+    public function buildAuthUser()
     {
-        $this->user = User::factory()->create([
-            'profile' => $profile != null ? $profile : Profile::admin()
-        ]);
+        $this->user = User::factory()->create();
 
         Sanctum::actingAs(
             $this->user,
-            [$this->user->profile->value]
+            ['*']
         );
     }
 }

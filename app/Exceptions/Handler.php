@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Features\Core\Domain\Failure\ApiFailure;
+use Features\Core\Domain\Failure\ApiFailure;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
@@ -64,7 +64,7 @@ class Handler extends ExceptionHandler
             }, array_values($e->errors()));
             return jsonErrorResponse(
                 $e->status,
-                __('Validation error'),
+                __('validation_error'),
                 'validation_error',
                 $errors
             );
@@ -73,7 +73,7 @@ class Handler extends ExceptionHandler
         $this->renderable(function (AuthenticationException $e) {
             return jsonErrorResponse(
                 401,
-                __('Unauthorized access'),
+                __('unauthorized_error'),
                 'unauthorized_error'
             );
         });

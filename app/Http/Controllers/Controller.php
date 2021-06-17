@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Features\Core\Framework\Transformer\FractalTransformer;
+use Features\Core\Framework\Transformer\FractalTransformer;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;

@@ -10,3 +10,8 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+use Illuminate\Support\Facades\Route;
+
+Route::prefix('users')
+    ->group(__DIR__ . '/api/users.php');
