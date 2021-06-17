@@ -56,4 +56,24 @@ class UserRepositoryTest extends TestCase
         // Assert
         $this->assertNull($result);
     }
+
+    /**
+     * @group users
+     * @test
+    */
+    public function createShouldPersistUserInDatabase()
+    {
+        // Arrange
+        $user = User::factory()->make();
+
+        // Act
+        $result = $this->repository->create($user);
+
+        // Assert
+        $this->assertNotNull($result);
+        $this->assertDatabaseHas('users', [
+            'name' => $result->name,
+            'email' => $result->email,
+        ]);
+    }
 }
