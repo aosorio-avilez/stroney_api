@@ -9,4 +9,6 @@ Route::post('', [UserController::class, 'create']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/revoke-access', [UserController::class, 'revokeAccess']);
+    
+    Route::put('/{userId}', [UserController::class, 'update']);
 });

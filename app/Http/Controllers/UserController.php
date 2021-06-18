@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Attribute;
 use Features\User\Presentation\Validators\AuthValidator;
 use Features\User\Domain\Usecases\AuthenticateUseCase;
 use Features\User\Domain\Usecases\CreateUserUseCase;
+use Features\User\Domain\Usecases\UpdateUserUseCase;
 use Features\User\Presentation\Transformers\AuthTransformer;
 use Features\User\Presentation\Transformers\UserTransformer;
 use Features\User\Presentation\Validators\CreateUserValidator;
+use Features\User\Presentation\Validators\UpdateUserValidator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -53,5 +56,23 @@ class UserController extends Controller
         $resource = $this->fractal->makeItem($user, $userTransformer);
 
         return jsonResponse(201, $resource->toArray());
+    }
+
+    public function update(
+        string $userId,
+        Request $request,
+        UpdateUserValidator $updateUserValidator,
+        UpdateUserUseCase $updateUserUseCase,
+        UserTransformer $userTransformer
+    ): JsonResponse {
+        $attributes = $updateUserValidator->validate($request->all());
+        
+        $user = new User($attributes);
+        $image = $attributes['image'] ?? null;
+        $user = $updateUserUseCase->handle($userId, $user, $image);
+
+        $resource = $this->fractal->makeItem($user, $userTransformer);
+
+        return jsonResponse(200, $resource->toArray());
     }
 }

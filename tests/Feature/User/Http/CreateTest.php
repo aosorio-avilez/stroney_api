@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\User\Http;
 
-use App\Models\Courier;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
@@ -66,6 +65,7 @@ class CreateTest extends TestCase
                     'id',
                     'name',
                     'email',
+                    'image_url'
                 ]
             ]);
     }

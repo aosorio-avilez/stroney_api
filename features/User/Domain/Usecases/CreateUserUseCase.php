@@ -5,6 +5,7 @@ namespace Features\User\Domain\Usecases;
 use Features\User\Domain\Repositories\UserRepository;
 use App\Models\User;
 use Features\User\Domain\Failures\UserAlreadyExists;
+use Illuminate\Support\Facades\Hash;
 
 class CreateUserUseCase
 {
@@ -22,6 +23,8 @@ class CreateUserUseCase
         if ($userFound != null) {
             throw new UserAlreadyExists();
         }
+
+        $user->password = Hash::make($user->password);
 
         return $this->repository->create($user);
     }
