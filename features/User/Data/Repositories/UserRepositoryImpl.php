@@ -26,4 +26,18 @@ class UserRepositoryImpl extends BaseRepository implements UserRepository
     {
         return $this->createOrUpdate($user->getAttributes());
     }
+
+    public function getById(string $userId): ?User
+    {
+        return $this->newQuery()
+            ->where('id', $userId)
+            ->first();
+    }
+
+    public function update(string $userId, User $user): User
+    {
+        return $this->createOrUpdate($user->getAttributes(), [
+            'id' => $userId
+        ]);
+    }
 }

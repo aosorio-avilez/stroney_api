@@ -76,4 +76,44 @@ class UserRepositoryTest extends TestCase
             'email' => $result->email,
         ]);
     }
+
+    /**
+     * @group users
+     * @test
+    */
+    public function findByIdShouldReturnUserInDatabase()
+    {
+        // Arrange
+        $user = User::factory()->create();
+
+        // Act
+        $result = $this->repository->getById($user->id);
+
+        // Assert
+        $this->assertNotNull($result);
+    }
+
+    /**
+     * @group users
+     * @test
+    */
+    public function updateShouldUpdateUserInDatabase()
+    {
+        // Arrange
+        $userToUpdate = User::factory()->create();
+        $user = User::factory()->make();
+
+        // Act
+        $result = $this->repository->update($userToUpdate->id, $user);
+
+        // Assert
+        $this->assertNotNull($result);
+        $this->assertDatabaseHas('users', [
+            'id' => $userToUpdate->id,
+            'name' => $result->name,
+            'email' => $result->email,
+            'image_url' => $result->image_url,
+            'image_file_name' => $result->image_file_name,
+        ]);
+    }
 }

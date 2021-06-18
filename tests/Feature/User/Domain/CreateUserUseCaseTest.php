@@ -47,6 +47,9 @@ class CreateUserUseCaseTest extends TestCase
             $mock->shouldReceive('getAttribute')
                 ->with('email')
                 ->andReturn('admin@mail.com');
+            $mock->shouldReceive('getAttribute')
+                ->with('password')
+                ->andReturn('12345678');
             $mock->shouldReceive('setAttribute');
         });
         $this->repository->shouldReceive('getByEmail')
