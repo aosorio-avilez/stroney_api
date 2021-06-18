@@ -5,6 +5,7 @@ namespace Tests\Feature\User\Http;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\Authenticable;
 use Tests\TestCase;
 
@@ -25,6 +26,7 @@ class UpdateTest extends TestCase
     public function shouldReturnOkWhenValidDataProvided()
     {
         // Arrange
+        Storage::fake('testing');
         $user = User::factory()->make();
         $data = [
             'name' => $user->name,
