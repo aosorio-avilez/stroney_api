@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Features\Category\Domain\Usecases\CreateCategoryUseCase;
 use Features\Category\Domain\Usecases\GetCategoryUseCase;
+use Features\Category\Domain\Usecases\RemoveCategoryUseCase;
 use Features\Category\Domain\Usecases\UpdateCategoryUseCase;
 use Features\Category\Presentation\Transformers\CategoryTransformer;
 use Features\Category\Presentation\Validators\CreateOrUpdateCategoryValidator;
@@ -56,5 +57,20 @@ class CategoryController extends Controller
         $resource = $this->fractal->makeItem($category, $categoryTransformer);
 
         return jsonResponse(200, $resource->toArray());
+    }
+
+    public function remove(
+        string $userId,
+        string $categoryId,
+        GetUserUseCase $getUserUseCase,
+        GetCategoryUseCase $getCategoryUseCase,
+        RemoveCategoryUseCase $removeCategoryUseCase
+    ): JsonResponse {
+        $getUserUseCase->handle($userId);
+
+        $category = $getCategoryUseCase->handle($categoryId);
+        $removeCategoryUseCase->handle($category->id);
+
+        return jsonResponse(204);
     }
 }

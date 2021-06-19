@@ -33,4 +33,12 @@ class CategoryRepositoryImpl extends BaseRepository implements CategoryRepositor
             ->where('id', $categoryId)
             ->first();
     }
+
+    public function remove(string $categoryId): bool
+    {
+        return $this->newQuery()
+            ->where('id', $categoryId)
+            ->first()
+            ->delete();
+    }
 }
