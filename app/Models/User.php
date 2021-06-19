@@ -6,11 +6,12 @@ use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Uuid, HasFactory, HasApiTokens, SoftDeletes;
+    use Uuid, HasFactory, HasApiTokens, SoftDeletes, Notifiable;
 
     protected $primaryKey = 'id';
     protected $keyType = 'string';
