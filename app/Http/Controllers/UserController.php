@@ -6,6 +6,7 @@ use App\Models\User;
 use Features\User\Presentation\Validators\AuthValidator;
 use Features\User\Domain\Usecases\AuthenticateUseCase;
 use Features\User\Domain\Usecases\CreateUserUseCase;
+use Features\User\Domain\Usecases\GetUserUseCase;
 use Features\User\Domain\Usecases\SendTemporalPasswordUseCase;
 use Features\User\Domain\Usecases\UpdatePasswordUseCase;
 use Features\User\Domain\Usecases\UpdateUserUseCase;
@@ -64,14 +65,18 @@ class UserController extends Controller
         string $userId,
         Request $request,
         UpdateUserValidator $updateUserValidator,
+        GetUserUseCase $getUserUseCase,
         UpdateUserUseCase $updateUserUseCase,
         UserTransformer $userTransformer
     ): JsonResponse {
         $attributes = $updateUserValidator->validate($request->all());
         
-        $user = new User($attributes);
+        $user = $getUserUseCase->handle($userId);
+        $user->setRawAttributes($attributes);
+        $user->setAttribute('id', $userId);
+        
         $image = $attributes['image'] ?? null;
-        $user = $updateUserUseCase->handle($userId, $user, $image);
+        $user = $updateUserUseCase->handle($user, $image);
 
         $resource = $this->fractal->makeItem($user, $userTransformer);
 
@@ -91,12 +96,15 @@ class UserController extends Controller
         string $userId,
         Request $request,
         UpdatePasswordValidator $updatePasswordValidator,
+        GetUserUseCase $getUserUseCase,
         UpdatePasswordUseCase $updatePasswordUseCase
     ): JsonResponse {
         $attributes = $updatePasswordValidator->validate($request->all());
 
+        $user = $getUserUseCase->handle($userId);
+
         $updatePasswordUseCase->handle(
-            $userId,
+            $user,
             $attributes['current_password'],
             $attributes['new_password'],
         );

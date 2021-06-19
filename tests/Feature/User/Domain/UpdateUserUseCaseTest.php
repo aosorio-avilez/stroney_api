@@ -59,7 +59,6 @@ class UpdateUserUseCaseTest extends TestCase
 
         // Act
         $result = $this->useCase->handle(
-            $user->id,
             $user,
             $image
         );

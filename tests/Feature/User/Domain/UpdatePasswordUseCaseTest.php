@@ -60,38 +60,13 @@ class UpdatePasswordUseCaseTest extends TestCase
 
         // Act
         $result = $this->useCase->handle(
-            $user->id,
+            $user,
             $currentPassword,
             $newPassword
         );
 
         // Assert
         $this->assertNotNull($result);
-    }
-
-    /**
-     * @group users
-     * @test
-    */
-    public function shouldThrowUserNotFoundWhenInvalidIdProvided()
-    {
-        // Arrange
-        $currentPassword = "12345678";
-        $newPassword = "87654321";
-        $this->repository->shouldReceive('getById')
-            ->andReturn(null);
-
-        try {
-            // Act
-            $this->useCase->handle(
-                'invalid_id',
-                $currentPassword,
-                $newPassword
-            );
-        } catch (\Throwable $th) {
-            // Assert
-            $this->assertInstanceOf(UserNotFound::class, $th);
-        }
     }
 
     /**
@@ -124,7 +99,7 @@ class UpdatePasswordUseCaseTest extends TestCase
         try {
             // Act
             $this->useCase->handle(
-                $user->id,
+                $user,
                 $invalidPassword,
                 $newPassword
             );

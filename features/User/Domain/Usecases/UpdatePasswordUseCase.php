@@ -2,7 +2,6 @@
 
 namespace Features\User\Domain\Usecases;
 
-use Features\User\Domain\Failures\UserNotFound;
 use Features\User\Domain\Repositories\UserRepository;
 use App\Models\User;
 use Features\User\Domain\Failures\UserIncorrectPassword;
@@ -17,20 +16,14 @@ class UpdatePasswordUseCase
         $this->repository = $repository;
     }
 
-    public function handle(string $userId, string $password, string $newPassword): User
+    public function handle(User $user, string $password, string $newPassword): User
     {
-        $currenUser = $this->repository->getById($userId);
-
-        if ($currenUser == null) {
-            throw new UserNotFound();
-        }
-
-        if (!Hash::check($password, $currenUser->password)) {
+        if (!Hash::check($password, $user->password)) {
             throw new UserIncorrectPassword();
         }
 
-        $currenUser->password = Hash::make($newPassword);
+        $user->password = Hash::make($newPassword);
 
-        return $this->repository->update($userId, $currenUser);
+        return $this->repository->update($user->id, $user);
     }
 }
