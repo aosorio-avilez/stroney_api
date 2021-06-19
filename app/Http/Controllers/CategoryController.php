@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Features\Category\Domain\Usecases\CreateCategoryUseCase;
+use Features\Category\Domain\Usecases\GetCategoryUseCase;
+use Features\Category\Domain\Usecases\UpdateCategoryUseCase;
 use Features\Category\Presentation\Transformers\CategoryTransformer;
-use Features\Category\Presentation\Validators\CreateCategoryValidator;
+use Features\Category\Presentation\Validators\CreateOrUpdateCategoryValidator;
 use Features\User\Domain\Usecases\GetUserUseCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,7 +17,7 @@ class CategoryController extends Controller
     public function create(
         string $userId,
         Request $request,
-        CreateCategoryValidator $createCategoryValidator,
+        CreateOrUpdateCategoryValidator $createCategoryValidator,
         GetUserUseCase $getUserUseCase,
         CreateCategoryUseCase $createCategoryUseCase,
         CategoryTransformer $categoryTransformer
@@ -31,5 +33,28 @@ class CategoryController extends Controller
         $resource = $this->fractal->makeItem($category, $categoryTransformer);
 
         return jsonResponse(201, $resource->toArray());
+    }
+
+    public function update(
+        string $userId,
+        string $categoryId,
+        Request $request,
+        CreateOrUpdateCategoryValidator $updateCategoryValidator,
+        GetUserUseCase $getUserUseCase,
+        GetCategoryUseCase $getCategoryUseCase,
+        UpdateCategoryUseCase $updateCategoryUseCase,
+        CategoryTransformer $categoryTransformer
+    ): JsonResponse {
+        $attributes = $updateCategoryValidator->validate($request->all());
+
+        $getUserUseCase->handle($userId);
+
+        $category = $getCategoryUseCase->handle($categoryId);
+        $category->setRawAttributes($attributes);
+        $category = $updateCategoryUseCase->handle($categoryId, $category);
+
+        $resource = $this->fractal->makeItem($category, $categoryTransformer);
+
+        return jsonResponse(200, $resource->toArray());
     }
 }

@@ -4,7 +4,7 @@ namespace Features\Category\Presentation\Validators;
 
 use Features\Core\Framework\Validator\BaseValidator;
 
-class CreateCategoryValidator extends BaseValidator
+class CreateOrUpdateCategoryValidator extends BaseValidator
 {
     public function getRules(): array
     {

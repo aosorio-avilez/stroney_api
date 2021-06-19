@@ -22,5 +22,6 @@
     "user_bad_credentials": "Las credenciales del usuario son incorrectas",
     "user_not_found": "El usuario no existe",
     "Regards": "Saludos",
-    "user_incorrect_password": "La contraseña es incorrecta"
+    "user_incorrect_password": "La contraseña es incorrecta",
+    "category_not_found": "La categoría no existe"
 }
