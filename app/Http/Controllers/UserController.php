@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Features\Category\Domain\Usecases\GetCategoriesByUserUseCase;
+use Features\Category\Presentation\Transformers\CategoryTransformer;
 use Features\User\Presentation\Validators\AuthValidator;
 use Features\User\Domain\Usecases\AuthenticateUseCase;
 use Features\User\Domain\Usecases\CreateUserUseCase;
@@ -110,5 +112,20 @@ class UserController extends Controller
         );
 
         return jsonResponse(204);
+    }
+
+    public function categories(
+        string $userId,
+        GetUserUseCase $getUserUseCase,
+        GetCategoriesByUserUseCase $getCategoriesByUserUseCase,
+        CategoryTransformer $categoryTransformer
+    ): JsonResponse {
+        $user = $getUserUseCase->handle($userId);
+
+        $categories = $getCategoriesByUserUseCase->handle($user->id);
+
+        $resource = $this->fractal->makeCollection($categories, $categoryTransformer);
+
+        return jsonResponse(200, $resource->toArray());
     }
 }

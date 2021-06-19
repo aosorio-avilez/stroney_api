@@ -6,6 +6,7 @@ use App\Models\Category;
 use Features\Category\Domain\Repositories\CategoryRepository;
 use Features\Core\Framework\Base\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Enumerable;
 
 class CategoryRepositoryImpl extends BaseRepository implements CategoryRepository
 {
@@ -40,5 +41,12 @@ class CategoryRepositoryImpl extends BaseRepository implements CategoryRepositor
             ->where('id', $categoryId)
             ->first()
             ->delete();
+    }
+
+    public function getByUser(string $userId): Enumerable
+    {
+        return $this->newQuery()
+            ->where('user_id', $userId)
+            ->get();
     }
 }

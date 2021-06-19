@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\Authenticable;
 use Tests\TestCase;
 
-class UpdateTest extends TestCase
+class GetTest extends TestCase
 {
     use DatabaseTransactions, Authenticable;
 
@@ -28,7 +28,7 @@ class UpdateTest extends TestCase
 
         // Act
         $response = $this->actingAs($this->user)
-            ->putJson("/api/categories/$category->id", $category->toArray());
+            ->getJson("/api/categories/$category->id");
         
         // Assert
         $response

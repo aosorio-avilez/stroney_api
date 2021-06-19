@@ -28,10 +28,7 @@ class CreateTest extends TestCase
 
         // Act
         $response = $this->actingAs($this->user)
-            ->postJson(
-                "/api/users/{$this->user->id}/categories",
-                $category->toArray()
-            );
+            ->postJson("/api/categories", $category->toArray());
             
         // Assert
         $response
