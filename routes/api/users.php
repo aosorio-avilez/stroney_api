@@ -13,4 +13,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/revoke-access', [UserController::class, 'revokeAccess']);
     
     Route::put('/{userId}', [UserController::class, 'update']);
+    
+    Route::patch('/{userId}/password', [UserController::class, 'updatePassword']);
 });
