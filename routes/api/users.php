@@ -7,6 +7,8 @@ Route::post('/auth', [UserController::class, 'authenticate']);
 
 Route::post('', [UserController::class, 'create']);
 
+Route::patch('/email/{email}/temporal-password', [UserController::class, 'sendTemporalPassword']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/revoke-access', [UserController::class, 'revokeAccess']);
     

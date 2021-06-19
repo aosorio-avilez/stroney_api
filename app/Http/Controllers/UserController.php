@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Attribute;
 use Features\User\Presentation\Validators\AuthValidator;
 use Features\User\Domain\Usecases\AuthenticateUseCase;
 use Features\User\Domain\Usecases\CreateUserUseCase;
+use Features\User\Domain\Usecases\SendTemporalPasswordUseCase;
 use Features\User\Domain\Usecases\UpdateUserUseCase;
 use Features\User\Presentation\Transformers\AuthTransformer;
 use Features\User\Presentation\Transformers\UserTransformer;
@@ -74,5 +74,14 @@ class UserController extends Controller
         $resource = $this->fractal->makeItem($user, $userTransformer);
 
         return jsonResponse(200, $resource->toArray());
+    }
+
+    public function sendTemporalPassword(
+        string $email,
+        SendTemporalPasswordUseCase $sendTemporalPasswordUseCase
+    ): JsonResponse {
+        $sendTemporalPasswordUseCase->handle($email);
+
+        return jsonResponse(204);
     }
 }
