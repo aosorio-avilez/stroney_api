@@ -36,7 +36,7 @@ class UpdateTest extends TestCase
         // Act
         $response = $this->actingAs($this->user)
             ->putJson("/api/users/{$this->user->id}", $data);
-        dd($response);
+        
         // Assert
         $response
             ->assertStatus(200)
