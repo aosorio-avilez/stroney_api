@@ -21,5 +21,6 @@
     "user_already_exists": "El usuario ya esta registrado",
     "user_bad_credentials": "Las credenciales del usuario son incorrectas",
     "user_not_found": "El usuario no existe",
-    "Regards": "Saludos"
+    "Regards": "Saludos",
+    "user_incorrect_password": "La contraseña es incorrecta"
 }

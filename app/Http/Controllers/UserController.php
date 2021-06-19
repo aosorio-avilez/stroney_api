@@ -7,10 +7,12 @@ use Features\User\Presentation\Validators\AuthValidator;
 use Features\User\Domain\Usecases\AuthenticateUseCase;
 use Features\User\Domain\Usecases\CreateUserUseCase;
 use Features\User\Domain\Usecases\SendTemporalPasswordUseCase;
+use Features\User\Domain\Usecases\UpdatePasswordUseCase;
 use Features\User\Domain\Usecases\UpdateUserUseCase;
 use Features\User\Presentation\Transformers\AuthTransformer;
 use Features\User\Presentation\Transformers\UserTransformer;
 use Features\User\Presentation\Validators\CreateUserValidator;
+use Features\User\Presentation\Validators\UpdatePasswordValidator;
 use Features\User\Presentation\Validators\UpdateUserValidator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -81,6 +83,23 @@ class UserController extends Controller
         SendTemporalPasswordUseCase $sendTemporalPasswordUseCase
     ): JsonResponse {
         $sendTemporalPasswordUseCase->handle($email);
+
+        return jsonResponse(204);
+    }
+
+    public function updatePassword(
+        string $userId,
+        Request $request,
+        UpdatePasswordValidator $updatePasswordValidator,
+        UpdatePasswordUseCase $updatePasswordUseCase
+    ): JsonResponse {
+        $attributes = $updatePasswordValidator->validate($request->all());
+
+        $updatePasswordUseCase->handle(
+            $userId,
+            $attributes['current_password'],
+            $attributes['new_password'],
+        );
 
         return jsonResponse(204);
     }
