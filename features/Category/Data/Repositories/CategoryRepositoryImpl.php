@@ -19,4 +19,18 @@ class CategoryRepositoryImpl extends BaseRepository implements CategoryRepositor
     {
         return $this->createOrUpdate($category->getAttributes());
     }
+
+    public function update(string $categoryId, Category $category): Category
+    {
+        return $this->createOrUpdate($category->getAttributes(), [
+            'id' => $categoryId
+        ]);
+    }
+
+    public function getById(string $categoryId): ?Category
+    {
+        return $this->newQuery()
+            ->where('id', $categoryId)
+            ->first();
+    }
 }

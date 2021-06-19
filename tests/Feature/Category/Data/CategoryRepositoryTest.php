@@ -3,7 +3,6 @@
 namespace Tests\Feature\User\Data;
 
 use App\Models\Category;
-use App\Models\User;
 use Features\Category\Data\Repositories\CategoryRepositoryImpl;
 use Features\Category\Domain\Repositories\CategoryRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -40,5 +39,42 @@ class CategoryRepositoryTest extends TestCase
             'user_id' => $result->user_id,
             'name' => $result->name,
         ]);
+    }
+
+    /**
+     * @group categories
+     * @test
+    */
+    public function updateShouldUpdateCategoryInDatabase()
+    {
+        // Arrange
+        $categoryToUpdate = Category::factory()->create();
+        $category = Category::factory()->make();
+
+        // Act
+        $result = $this->repository->update($categoryToUpdate->id, $category);
+
+        // Assert
+        $this->assertNotNull($result);
+        $this->assertDatabaseHas('categories', [
+            'id' => $categoryToUpdate->id,
+            'name' => $result->name,
+        ]);
+    }
+
+    /**
+     * @group categories
+     * @test
+    */
+    public function getByIdShouldReturnCategoryFromDatabase()
+    {
+        // Arrange
+        $category = Category::factory()->create();
+
+        // Act
+        $result = $this->repository->getById($category->id);
+
+        // Assert
+        $this->assertNotNull($result);
     }
 }
