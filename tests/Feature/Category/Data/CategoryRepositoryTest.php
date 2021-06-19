@@ -77,4 +77,23 @@ class CategoryRepositoryTest extends TestCase
         // Assert
         $this->assertNotNull($result);
     }
+
+    /**
+     * @group categories
+     * @test
+    */
+    public function removeShouldDeleteCategoryFromDatabase()
+    {
+        // Arrange
+        $category = Category::factory()->create();
+
+        // Act
+        $result = $this->repository->remove($category->id);
+
+        // Assert
+        $this->assertTrue($result);
+        $this->assertDatabaseMissing('categories', [
+            'id' => $category->id
+        ]);
+    }
 }

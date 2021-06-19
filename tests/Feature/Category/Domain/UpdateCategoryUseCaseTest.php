@@ -3,13 +3,8 @@
 namespace Tests\Feature\Category\Domain;
 
 use App\Models\Category;
-use Features\User\Domain\Repositories\UserRepository;
-use Features\User\Domain\Usecases\UpdateUserUseCase;
-use App\Models\User;
 use Features\Category\Domain\Repositories\CategoryRepository;
 use Features\Category\Domain\Usecases\UpdateCategoryUseCase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Mockery;
 use Mockery\LegacyMockInterface;
 use Ramsey\Uuid\Uuid;
