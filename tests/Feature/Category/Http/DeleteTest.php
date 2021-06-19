@@ -28,7 +28,7 @@ class DeleteTest extends TestCase
 
         // Act
         $response = $this->actingAs($this->user)
-            ->deleteJson("/api/users/{$this->user->id}/categories/$category->id");
+            ->deleteJson("/api/categories/$category->id");
         
         // Assert
         $response->assertStatus(204);

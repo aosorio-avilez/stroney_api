@@ -1,13 +1,14 @@
 <?php
 
-namespace Tests\Feature\Category\Http;
+namespace Tests\Feature\User\Http;
 
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\Authenticable;
 use Tests\TestCase;
 
-class UpdateTest extends TestCase
+class GetCategoriesTest extends TestCase
 {
     use DatabaseTransactions, Authenticable;
 
@@ -18,26 +19,29 @@ class UpdateTest extends TestCase
     }
 
     /**
-     * @group categories
+     * @group users
      * @test
     */
-    public function shouldReturnOkWhenValidDataProvided()
+    public function shouldReturnOk()
     {
         // Arrange
-        $category = Category::factory()->create();
+        $user = User::factory()->create();
+        Category::factory()->create([
+            'user_id' => $user->id
+        ]);
 
         // Act
         $response = $this->actingAs($this->user)
-            ->putJson("/api/categories/$category->id", $category->toArray());
+            ->getJson("/api/users/$user->id/categories");
         
         // Assert
         $response
             ->assertStatus(200)
             ->assertJsonStructure([
-                'data' => [
+                'data' => [[
                     'id',
                     'name',
-                ]
+                ]]
             ]);
     }
 }

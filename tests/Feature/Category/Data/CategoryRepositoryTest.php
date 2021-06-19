@@ -3,6 +3,7 @@
 namespace Tests\Feature\User\Data;
 
 use App\Models\Category;
+use App\Models\User;
 use Features\Category\Data\Repositories\CategoryRepositoryImpl;
 use Features\Category\Domain\Repositories\CategoryRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -95,5 +96,28 @@ class CategoryRepositoryTest extends TestCase
         $this->assertDatabaseMissing('categories', [
             'id' => $category->id
         ]);
+    }
+
+    /**
+     * @group categories
+     * @test
+    */
+    public function getByUserShouldReturnUserCategoriesFromDatabase()
+    {
+        // Arrange
+        $user = User::factory()->create();
+        Category::factory()
+            ->count(10)
+            ->create([
+                'user_id' => $user->id
+            ]);
+
+        // Act
+        $result = $this->repository->getByUser($user->id);
+
+        // Assert
+        $this->assertNotNull($result);
+        $this->assertNotEmpty($result);
+        $this->assertCount(10, $result);
     }
 }

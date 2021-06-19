@@ -15,3 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('users')
     ->group(__DIR__ . '/api/users.php');
+
+Route::prefix('/categories')
+    ->group(__DIR__ . '/api/categories.php');
