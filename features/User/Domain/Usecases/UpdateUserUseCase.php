@@ -20,20 +20,14 @@ class UpdateUserUseCase
         $this->repository = $repository;
     }
 
-    public function handle(string $userId, User $user, ?UploadedFile $file): User
+    public function handle(User $user, ?UploadedFile $file): User
     {
-        $currenUser = $this->repository->getById($userId);
-
-        if ($currenUser == null) {
-            throw new UserNotFound();
-        }
-        
         if ($file != null) {
             $user->image_file_name = FileHelper::getRandomFileName($file);
             $this->saveFile($user->image_file_name, $file);
             $user->image_url = $this->getFileUrl($user->image_file_name);
         }
 
-        return $this->repository->update($userId, $user);
+        return $this->repository->update($user->id, $user);
     }
 }
