@@ -61,7 +61,7 @@ class GetCategoryUseCaseTest extends TestCase
      * @group categories
      * @test
     */
-    public function shouldThrowUserNotFoundWhenInvalidIdProvided()
+    public function shouldThrowCategoryNotFoundWhenInvalidIdProvided()
     {
         // Arrange
         $this->repository->shouldReceive('getById')

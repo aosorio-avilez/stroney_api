@@ -43,4 +43,44 @@ class AccountRepositoryTest extends TestCase
             'notes' => $result->notes,
         ]);
     }
+
+    /**
+     * @group accounts
+     * @test
+    */
+    public function updateShouldUpdateInDatabase()
+    {
+        // Arrange
+        $accountToUpdate = Account::factory()->create();
+        $account = Account::factory()->make();
+
+        // Act
+        $result = $this->repository->update($accountToUpdate->id, $account);
+
+        // Assert
+        $this->assertNotNull($result);
+        $this->assertDatabaseHas('accounts', [
+            'id' => $accountToUpdate->id,
+            'user_currency_id' => $result->user_currency_id,
+            'name' => $result->name,
+            'amount' => $result->amount,
+            'notes' => $result->notes,
+        ]);
+    }
+
+    /**
+     * @group accounts
+     * @test
+    */
+    public function getByIdShouldReturnFromDatabase()
+    {
+        // Arrange
+        $account = Account::factory()->create();
+
+        // Act
+        $result = $this->repository->getById($account->id);
+
+        // Assert
+        $this->assertNotNull($result);
+    }
 }

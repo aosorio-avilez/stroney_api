@@ -19,4 +19,18 @@ class AccountRepositoryImpl extends BaseRepository implements AccountRepository
     {
         return $this->createOrUpdate($account->getAttributes());
     }
+
+    public function update(string $accountId, Account $account): Account
+    {
+        return $this->createOrUpdate($account->getAttributes(), [
+            'id' => $accountId
+        ]);
+    }
+
+    public function getById(string $accountId): ?Account
+    {
+        return $this->newQuery()
+            ->where('id', $accountId)
+            ->first();
+    }
 }

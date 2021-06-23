@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use Features\Account\Domain\Usecases\CreateAccountUseCase;
+use Features\Account\Domain\Usecases\GetAccountUseCase;
+use Features\Account\Domain\Usecases\UpdateAccountUseCase;
 use Features\Account\Presentation\Transformers\AccountTransformer;
 use Features\Account\Presentation\Validators\CreateAccountValidator;
+use Features\Account\Presentation\Validators\UpdateAccountValidator;
 use Features\User\Domain\Usecases\GetUserUseCase;
 use Features\UserCurrency\Domain\Usecases\GetUserCurrencyUseCase;
 use Illuminate\Http\JsonResponse;
@@ -32,5 +35,25 @@ class AccountController extends Controller
         $resource = $this->fractal->makeItem($account, $accountTransformer);
 
         return jsonResponse(201, $resource->toArray());
+    }
+
+    public function update(
+        string $accountId,
+        Request $request,
+        UpdateAccountValidator $updateAccountValidator,
+        GetAccountUseCase $getAccountUseCase,
+        UpdateAccountUseCase $updateAccountUseCase,
+        AccountTransformer $accountTransformer
+    ): JsonResponse {
+        $attributes = $updateAccountValidator->validate($request->all());
+
+        $getAccountUseCase->handle($accountId);
+
+        $account = new Account($attributes);
+        $account = $updateAccountUseCase->handle($accountId, $account);
+
+        $resource = $this->fractal->makeItem($account, $accountTransformer);
+
+        return jsonResponse(200, $resource->toArray());
     }
 }
