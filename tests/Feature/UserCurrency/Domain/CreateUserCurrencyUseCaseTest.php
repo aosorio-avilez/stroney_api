@@ -1,14 +1,12 @@
 <?php
 
-namespace Tests\Feature\User\Domain;
+namespace Tests\Feature\UserCurrency\Domain;
 
-use App\Models\Currency;
 use App\Models\User;
 use App\Models\UserCurrency;
-use Features\Currency\Domain\Repositories\CurrencyRepository;
-use Features\User\Domain\Failures\UserCurrencyAlreadyExists;
-use Features\User\Domain\Repositories\UserCurrencyRepository;
-use Features\User\Domain\Usecases\CreateUserCurrencyUseCase;
+use Features\UserCurrency\Domain\Failures\UserCurrencyAlreadyExists;
+use Features\UserCurrency\Domain\Repositories\UserCurrencyRepository;
+use Features\UserCurrency\Domain\Usecases\CreateUserCurrencyUseCase;
 use Mockery;
 use Mockery\LegacyMockInterface;
 use Tests\TestCase;

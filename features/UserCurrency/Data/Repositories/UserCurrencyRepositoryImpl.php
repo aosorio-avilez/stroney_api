@@ -1,11 +1,11 @@
 <?php
 
-namespace Features\User\Data\Repositories;
+namespace Features\UserCurrency\Data\Repositories;
 
 use Features\Core\Framework\Base\BaseRepository;
 
 use App\Models\UserCurrency;
-use Features\User\Domain\Repositories\UserCurrencyRepository;
+use Features\UserCurrency\Domain\Repositories\UserCurrencyRepository;
 use Illuminate\Database\Eloquent\Model;
 
 class UserCurrencyRepositoryImpl extends BaseRepository implements UserCurrencyRepository
@@ -27,5 +27,19 @@ class UserCurrencyRepositoryImpl extends BaseRepository implements UserCurrencyR
             ->where('user_id', $userId)
             ->where('currency_id', $currencyId)
             ->first();
+    }
+
+    public function getById(string $userCurrencyId): ?UserCurrency
+    {
+        return $this->newQuery()
+            ->where('id', $userCurrencyId)
+            ->first();
+    }
+
+    public function update(string $userCurrencyId, UserCurrency $userCurrency): UserCurrency
+    {
+        return $this->createOrUpdate($userCurrency->getAttributes(), [
+            'id' => $userCurrencyId
+        ]);
     }
 }

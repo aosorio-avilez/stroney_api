@@ -1,10 +1,10 @@
 <?php
 
-namespace Features\User\Domain\Usecases;
+namespace Features\UserCurrency\Domain\Usecases;
 
 use App\Models\UserCurrency;
-use Features\User\Domain\Failures\UserCurrencyAlreadyExists;
-use Features\User\Domain\Repositories\UserCurrencyRepository;
+use Features\UserCurrency\Domain\Failures\UserCurrencyAlreadyExists;
+use Features\UserCurrency\Domain\Repositories\UserCurrencyRepository;
 
 class CreateUserCurrencyUseCase
 {

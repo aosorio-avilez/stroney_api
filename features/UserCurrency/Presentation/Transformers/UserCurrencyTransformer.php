@@ -1,6 +1,6 @@
 <?php
 
-namespace Features\User\Presentation\Transformers;
+namespace Features\UserCurrency\Presentation\Transformers;
 
 use App\Models\UserCurrency;
 use Features\Core\Framework\Transformer\FractalTransformer;
