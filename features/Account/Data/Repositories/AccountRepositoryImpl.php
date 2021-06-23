@@ -6,6 +6,7 @@ use App\Models\Account;
 use Features\Account\Domain\Repositories\AccountRepository;
 use Features\Core\Framework\Base\BaseRepository;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Enumerable;
 
 class AccountRepositoryImpl extends BaseRepository implements AccountRepository
 {
@@ -40,5 +41,12 @@ class AccountRepositoryImpl extends BaseRepository implements AccountRepository
             ->where('id', $accountId)
             ->first()
             ->delete();
+    }
+
+    public function getByUser(string $userId): Enumerable
+    {
+        return $this->newQuery()
+            ->where('user_id', $userId)
+            ->get();
     }
 }

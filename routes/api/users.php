@@ -18,6 +18,8 @@ Route::middleware('auth:sanctum')->group(function () {
     
     Route::get('/{userId}/categories', [UserController::class, 'categories']);
     
+    Route::get('/{userId}/accounts', [UserController::class, 'accounts']);
+    
     Route::prefix('/{userId}/currencies')
         ->group(__DIR__ . '/user_currencies.php');
 });

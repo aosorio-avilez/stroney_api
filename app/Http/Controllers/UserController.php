@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Features\Account\Domain\Usecases\GetAccountsByUserUseCase;
+use Features\Account\Presentation\Transformers\AccountTransformer;
 use Features\Category\Domain\Usecases\GetCategoriesByUserUseCase;
 use Features\Category\Presentation\Transformers\CategoryTransformer;
 use Features\User\Presentation\Validators\AuthValidator;
@@ -125,6 +127,21 @@ class UserController extends Controller
         $categories = $getCategoriesByUserUseCase->handle($user->id);
 
         $resource = $this->fractal->makeCollection($categories, $categoryTransformer);
+
+        return jsonResponse(200, $resource->toArray());
+    }
+
+    public function accounts(
+        string $userId,
+        GetUserUseCase $getUserUseCase,
+        GetAccountsByUserUseCase $getAccountsByUserUseCase,
+        AccountTransformer $accountTransformer
+    ): JsonResponse {
+        $user = $getUserUseCase->handle($userId);
+
+        $accounts = $getAccountsByUserUseCase->handle($user->id);
+
+        $resource = $this->fractal->makeCollection($accounts, $accountTransformer);
 
         return jsonResponse(200, $resource->toArray());
     }
