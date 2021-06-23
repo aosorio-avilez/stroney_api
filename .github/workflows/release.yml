@@ -52,7 +52,7 @@ jobs:
         prerelease: false
 
     - name: Build Realease Artifact
-      run: zip -rq ${{ env.TAG_NAME }}.zip .ebextensions .platform app bootstrap config database public resources routes storage tests vendor .env artisan composer.json
+      run: zip -rq ${{ env.TAG_NAME }}.zip .ebextensions .platform app bootstrap config database public features resources routes storage tests vendor .env artisan composer.json
 
     - name: Upload Release Artifact
       id: upload-release
