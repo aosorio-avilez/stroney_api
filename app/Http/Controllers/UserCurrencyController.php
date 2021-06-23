@@ -6,6 +6,7 @@ use App\Models\UserCurrency;
 use Features\UserCurrency\Domain\Usecases\CreateUserCurrencyUseCase;
 use Features\UserCurrency\Domain\Usecases\GetUserCurrencyUseCase;
 use Features\User\Domain\Usecases\GetUserUseCase;
+use Features\UserCurrency\Domain\Usecases\RemoveUserCurrencyUseCase;
 use Features\UserCurrency\Domain\Usecases\UpdateUserCurrencyUseCase;
 use Features\UserCurrency\Presentation\Transformers\UserCurrencyTransformer;
 use Features\UserCurrency\Presentation\Validators\CreateUserCurrencyValidator;
@@ -69,5 +70,20 @@ class UserCurrencyController extends Controller
         );
 
         return jsonResponse(200, $resource->toArray());
+    }
+
+    public function remove(
+        string $userId,
+        string $userCurrencyId,
+        GetUserUseCase $getUserUseCase,
+        GetUserCurrencyUseCase $getUserCurrencyUseCase,
+        RemoveUserCurrencyUseCase $removeUserCurrencyUseCase
+    ): JsonResponse {
+        $getUserUseCase->handle($userId);
+        $userCurrency = $getUserCurrencyUseCase->handle($userCurrencyId);
+
+        $removeUserCurrencyUseCase->handle($userCurrency->id);
+
+        return jsonResponse(204);
     }
 }

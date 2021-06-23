@@ -42,4 +42,12 @@ class UserCurrencyRepositoryImpl extends BaseRepository implements UserCurrencyR
             'id' => $userCurrencyId
         ]);
     }
+ 
+    public function remove(string $userCurrencyId): bool
+    {
+        return $this->newQuery()
+            ->where('id', $userCurrencyId)
+            ->first()
+            ->delete();
+    }
 }

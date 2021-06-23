@@ -102,4 +102,23 @@ class UserCurrencyRepositoryTest extends TestCase
             'exchange_rate' => $result->exchange_rate,
         ]);
     }
+
+    /**
+     * @group user-currencies
+     * @test
+    */
+    public function removeShouldDeleteUserCurrencyFromDatabase()
+    {
+        // Arrange
+        $userCurrency = UserCurrency::factory()->create();
+
+        // Act
+        $result = $this->repository->remove($userCurrency->id);
+
+        // Assert
+        $this->assertTrue($result);
+        $this->assertDatabaseMissing('user_currencies', [
+            'id' => $userCurrency->id
+        ]);
+    }
 }

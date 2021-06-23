@@ -13,4 +13,6 @@ interface UserCurrencyRepository
     public function getById(string $userCurrencyId): ?UserCurrency;
 
     public function update(string $userCurrencyId, UserCurrency $userCurrency): UserCurrency;
+    
+    public function remove(string $userCurrencyId): bool;
 }
