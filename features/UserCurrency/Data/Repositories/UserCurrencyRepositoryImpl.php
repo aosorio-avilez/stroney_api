@@ -7,6 +7,7 @@ use Features\Core\Framework\Base\BaseRepository;
 use App\Models\UserCurrency;
 use Features\UserCurrency\Domain\Repositories\UserCurrencyRepository;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Enumerable;
 
 class UserCurrencyRepositoryImpl extends BaseRepository implements UserCurrencyRepository
 {
@@ -49,5 +50,12 @@ class UserCurrencyRepositoryImpl extends BaseRepository implements UserCurrencyR
             ->where('id', $userCurrencyId)
             ->first()
             ->delete();
+    }
+
+    public function getByUser(string $userId): Enumerable
+    {
+        return $this->newQuery()
+            ->where('user_id', $userId)
+            ->get();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\UserCurrency\Data;
 
+use App\Models\User;
 use App\Models\UserCurrency;
 use Features\UserCurrency\Data\Repositories\UserCurrencyRepositoryImpl;
 use Features\UserCurrency\Domain\Repositories\UserCurrencyRepository;
@@ -120,5 +121,28 @@ class UserCurrencyRepositoryTest extends TestCase
         $this->assertDatabaseMissing('user_currencies', [
             'id' => $userCurrency->id
         ]);
+    }
+
+    /**
+     * @group user-currencies
+     * @test
+    */
+    public function getByUserShouldReturnUserCurrenciesFromDatabase()
+    {
+        // Arrange
+        $user = User::factory()->create();
+        UserCurrency::factory()
+            ->count(10)
+            ->create([
+                'user_id' => $user->id
+            ]);
+
+        // Act
+        $result = $this->repository->getByUser($user->id);
+
+        // Assert
+        $this->assertNotNull($result);
+        $this->assertNotEmpty($result);
+        $this->assertCount(10, $result);
     }
 }

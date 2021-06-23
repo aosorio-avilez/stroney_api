@@ -6,6 +6,7 @@ use App\Models\UserCurrency;
 use Features\UserCurrency\Domain\Usecases\CreateUserCurrencyUseCase;
 use Features\UserCurrency\Domain\Usecases\GetUserCurrencyUseCase;
 use Features\User\Domain\Usecases\GetUserUseCase;
+use Features\UserCurrency\Domain\Usecases\GetUserCurrenciesByUserUseCase;
 use Features\UserCurrency\Domain\Usecases\RemoveUserCurrencyUseCase;
 use Features\UserCurrency\Domain\Usecases\UpdateUserCurrencyUseCase;
 use Features\UserCurrency\Presentation\Transformers\UserCurrencyTransformer;
@@ -85,5 +86,20 @@ class UserCurrencyController extends Controller
         $removeUserCurrencyUseCase->handle($userCurrency->id);
 
         return jsonResponse(204);
+    }
+
+    public function all(
+        string $userId,
+        GetUserUseCase $getUserUseCase,
+        GetUserCurrenciesByUserUseCase $getUserCurrenciesByUserUseCase,
+        UserCurrencyTransformer $userCurrencyTransformer
+    ): JsonResponse {
+        $user = $getUserUseCase->handle($userId);
+
+        $userCurrencies = $getUserCurrenciesByUserUseCase->handle($user->id);
+
+        $resource = $this->fractal->makeCollection($userCurrencies, $userCurrencyTransformer);
+
+        return jsonResponse(200, $resource->toArray());
     }
 }

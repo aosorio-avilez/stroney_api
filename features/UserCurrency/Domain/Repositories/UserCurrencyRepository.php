@@ -3,6 +3,7 @@
 namespace Features\UserCurrency\Domain\Repositories;
 
 use App\Models\UserCurrency;
+use Illuminate\Support\Enumerable;
 
 interface UserCurrencyRepository
 {
@@ -15,4 +16,6 @@ interface UserCurrencyRepository
     public function update(string $userCurrencyId, UserCurrency $userCurrency): UserCurrency;
     
     public function remove(string $userCurrencyId): bool;
+
+    public function getByUser(string $userId): Enumerable;
 }
