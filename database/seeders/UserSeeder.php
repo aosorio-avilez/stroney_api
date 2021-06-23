@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -19,7 +18,7 @@ class UserSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         DB::table('users')->truncate();
-        User::factory()->create([
+        DB::table('currencies')->insert([
             'name' => 'Administrator',
             'email' => 'admin@mail.com',
             'password' => Hash::make('12345678'),

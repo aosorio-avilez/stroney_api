@@ -17,4 +17,9 @@ Route::prefix('users')
     ->group(__DIR__ . '/api/users.php');
 
 Route::prefix('/categories')
+    ->middleware('auth:sanctum')
     ->group(__DIR__ . '/api/categories.php');
+
+Route::prefix('/currencies')
+    ->middleware('auth:sanctum')
+    ->group(__DIR__ . '/api/currencies.php');
