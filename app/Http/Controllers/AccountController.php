@@ -8,6 +8,7 @@ use Features\Account\Domain\Usecases\GetAccountUseCase;
 use Features\Account\Domain\Usecases\RemoveAccountUseCase;
 use Features\Account\Domain\Usecases\UpdateAccountUseCase;
 use Features\Account\Presentation\Transformers\AccountTransformer;
+use Features\Account\Presentation\Validators\AdjustBalanceAccountValidator;
 use Features\Account\Presentation\Validators\CreateAccountValidator;
 use Features\Account\Presentation\Validators\UpdateAccountValidator;
 use Features\User\Domain\Usecases\GetUserUseCase;
@@ -68,5 +69,37 @@ class AccountController extends Controller
         $removeAccountUseCase->handle($account->id);
 
         return jsonResponse(204);
+    }
+
+    public function adjustBalance(
+        string $accountId,
+        Request $request,
+        AdjustBalanceAccountValidator $adjustBalanceAccountValidator,
+        GetAccountUseCase $getAccountUseCase,
+        UpdateAccountUseCase $updateAccountUseCase,
+        AccountTransformer $accountTransformer
+    ): JsonResponse {
+        $attributes = $adjustBalanceAccountValidator->validate($request->all());
+
+        $account = $getAccountUseCase->handle($accountId);
+        $account->amount = $attributes['amount'];
+
+        $account = $updateAccountUseCase->handle($account->id, $account);
+
+        $resource = $this->fractal->makeItem($account, $accountTransformer);
+
+        return jsonResponse(200, $resource->toArray());
+    }
+
+    public function get(
+        string $accountId,
+        GetAccountUseCase $getAccountUseCase,
+        AccountTransformer $accountTransformer
+    ): JsonResponse {
+        $account = $getAccountUseCase->handle($accountId);
+
+        $resource = $this->fractal->makeItem($account, $accountTransformer);
+
+        return jsonResponse(200, $resource->toArray());
     }
 }
