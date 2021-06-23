@@ -1,6 +1,6 @@
 <?php
 
-namespace Features\User\Domain\Failures;
+namespace Features\UserCurrency\Domain\Failures;
 
 use Features\Core\Domain\Failure\ApiFailure;
 

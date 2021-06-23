@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserCurrency;
-use Features\User\Domain\Usecases\CreateUserCurrencyUseCase;
+use Features\UserCurrency\Domain\Usecases\CreateUserCurrencyUseCase;
+use Features\UserCurrency\Domain\Usecases\GetUserCurrencyUseCase;
 use Features\User\Domain\Usecases\GetUserUseCase;
-use Features\User\Presentation\Transformers\UserCurrencyTransformer;
-use Features\User\Presentation\Validators\CreateUserCurrencyValidator;
+use Features\UserCurrency\Domain\Usecases\UpdateUserCurrencyUseCase;
+use Features\UserCurrency\Presentation\Transformers\UserCurrencyTransformer;
+use Features\UserCurrency\Presentation\Validators\CreateUserCurrencyValidator;
+use Features\UserCurrency\Presentation\Validators\UpdateUserCurrencyValidator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -37,5 +40,34 @@ class UserCurrencyController extends Controller
         );
 
         return jsonResponse(201, $resource->toArray());
+    }
+
+    public function update(
+        string $userId,
+        string $userCurrencyId,
+        Request $request,
+        UpdateUserCurrencyValidator $updateUserCurrencyValidator,
+        GetUserUseCase $getUserUseCase,
+        GetUserCurrencyUseCase $getUserCurrencyUseCase,
+        UpdateUserCurrencyUseCase $updateUserCurrencyUseCase,
+        UserCurrencyTransformer $userCurrencyTransformer
+    ): JsonResponse {
+        $attributes = $updateUserCurrencyValidator->validate($request->all());
+
+        $getUserUseCase->handle($userId);
+        $getUserCurrencyUseCase->handle($userCurrencyId);
+
+        $userCurrency = new UserCurrency($attributes);
+        $userCurrency = $updateUserCurrencyUseCase->handle(
+            $userCurrencyId,
+            $userCurrency,
+        );
+
+        $resource = $this->fractal->makeItem(
+            $userCurrency,
+            $userCurrencyTransformer
+        );
+
+        return jsonResponse(200, $resource->toArray());
     }
 }

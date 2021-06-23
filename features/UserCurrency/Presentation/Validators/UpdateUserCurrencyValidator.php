@@ -1,10 +1,10 @@
 <?php
 
-namespace Features\User\Presentation\Validators;
+namespace Features\UserCurrency\Presentation\Validators;
 
 use Features\Core\Framework\Validator\BaseValidator;
 
-class CreateUserCurrencyValidator extends BaseValidator
+class UpdateUserCurrencyValidator extends BaseValidator
 {
     public function getRules(): array
     {
