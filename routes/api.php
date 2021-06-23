@@ -23,3 +23,7 @@ Route::prefix('/categories')
 Route::prefix('/currencies')
     ->middleware('auth:sanctum')
     ->group(__DIR__ . '/api/currencies.php');
+
+Route::prefix('/accounts')
+    ->middleware('auth:sanctum')
+    ->group(__DIR__ . '/api/accounts.php');

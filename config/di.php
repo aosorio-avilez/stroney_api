@@ -1,5 +1,7 @@
 <?php
 
+use Features\Account\Data\Repositories\AccountRepositoryImpl;
+use Features\Account\Domain\Repositories\AccountRepository;
 use Features\Category\Data\Repositories\CategoryRepositoryImpl;
 use Features\Category\Domain\Repositories\CategoryRepository;
 use Features\Currency\Data\Repositories\CurrencyRepositoryImpl;
@@ -14,4 +16,5 @@ return [
     CategoryRepository::class => CategoryRepositoryImpl::class,
     CurrencyRepository::class => CurrencyRepositoryImpl::class,
     UserCurrencyRepository::class => UserCurrencyRepositoryImpl::class,
+    AccountRepository::class => AccountRepositoryImpl::class,
 ];
