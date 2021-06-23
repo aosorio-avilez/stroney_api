@@ -3,6 +3,7 @@
 namespace Features\Account\Domain\Repositories;
 
 use App\Models\Account;
+use Illuminate\Support\Enumerable;
 
 interface AccountRepository
 {
@@ -13,4 +14,6 @@ interface AccountRepository
     public function getById(string $accountId): ?Account;
 
     public function remove(string $accountId): bool;
+
+    public function getByUser(string $userId): Enumerable;
 }

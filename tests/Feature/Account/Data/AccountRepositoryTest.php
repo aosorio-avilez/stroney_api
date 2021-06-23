@@ -3,6 +3,7 @@
 namespace Tests\Feature\Account\Data;
 
 use App\Models\Account;
+use App\Models\User;
 use Features\Account\Data\Repositories\AccountRepositoryImpl;
 use Features\Account\Domain\Repositories\AccountRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -101,5 +102,28 @@ class AccountRepositoryTest extends TestCase
         $this->assertDatabaseMissing('accounts', [
             'id' => $account->id
         ]);
+    }
+
+    /**
+     * @group accounts
+     * @test
+    */
+    public function getByUserShouldReturnUserAccountsFromDatabase()
+    {
+        // Arrange
+        $user = User::factory()->create();
+        Account::factory()
+            ->count(10)
+            ->create([
+                'user_id' => $user->id
+            ]);
+
+        // Act
+        $result = $this->repository->getByUser($user->id);
+
+        // Assert
+        $this->assertNotNull($result);
+        $this->assertNotEmpty($result);
+        $this->assertCount(10, $result);
     }
 }
