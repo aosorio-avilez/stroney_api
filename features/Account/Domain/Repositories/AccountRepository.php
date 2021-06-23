@@ -11,4 +11,6 @@ interface AccountRepository
     public function update(string $accountId, Account $account): Account;
 
     public function getById(string $accountId): ?Account;
+
+    public function remove(string $accountId): bool;
 }

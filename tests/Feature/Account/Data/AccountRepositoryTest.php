@@ -83,4 +83,23 @@ class AccountRepositoryTest extends TestCase
         // Assert
         $this->assertNotNull($result);
     }
+
+    /**
+    * @group accounts
+    * @test
+    */
+    public function removeShouldDeleteAccountFromDatabase()
+    {
+        // Arrange
+        $account = Account::factory()->create();
+
+        // Act
+        $result = $this->repository->remove($account->id);
+
+        // Assert
+        $this->assertTrue($result);
+        $this->assertDatabaseMissing('accounts', [
+            'id' => $account->id
+        ]);
+    }
 }
