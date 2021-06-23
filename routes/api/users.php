@@ -17,4 +17,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/{userId}/password', [UserController::class, 'updatePassword']);
     
     Route::get('/{userId}/categories', [UserController::class, 'categories']);
+    
+    Route::prefix('/{userId}/currencies')
+        ->group(__DIR__ . '/user_currencies.php');
 });

@@ -23,5 +23,6 @@
     "user_not_found": "El usuario no existe",
     "Regards": "Saludos",
     "user_incorrect_password": "La contraseña es incorrecta",
-    "category_not_found": "La categoría no existe"
+    "category_not_found": "La categoría no existe",
+    "user_currency_already_exists": "La moneda ya existe"
 }

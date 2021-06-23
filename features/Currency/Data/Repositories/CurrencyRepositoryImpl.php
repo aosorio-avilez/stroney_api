@@ -21,4 +21,11 @@ class CurrencyRepositoryImpl extends BaseRepository implements CurrencyRepositor
         return $this->newQuery()
             ->get();
     }
+
+    public function getById(string $currencyId): ?Currency
+    {
+        return $this->newQuery()
+            ->where('id', $currencyId)
+            ->first();
+    }
 }

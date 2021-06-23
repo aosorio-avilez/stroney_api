@@ -37,4 +37,20 @@ class CurrencyRepositoryTest extends TestCase
         $this->assertNotNull($result);
         $this->assertNotEmpty($result);
     }
+
+    /**
+     * @group currencies
+     * @test
+    */
+    public function getByIdShouldReturnCurrencyFromDatabase()
+    {
+        // Arrange
+        $currency = Currency::factory()->create();
+
+        // Act
+        $result = $this->repository->getById($currency->id);
+
+        // Assert
+        $this->assertNotNull($result);
+    }
 }
