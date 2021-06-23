@@ -21,6 +21,10 @@ class UserCurrency extends Model
         'exchange_rate',
     ];
 
+    protected $casts = [
+        'exchange_rate' => 'float'
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

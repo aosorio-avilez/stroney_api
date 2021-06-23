@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
+use Ramsey\Uuid\Uuid;
 
 class UserSeeder extends Seeder
 {
@@ -18,7 +19,8 @@ class UserSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
         DB::table('users')->truncate();
-        DB::table('currencies')->insert([
+        DB::table('users')->insert([
+            'id' => Uuid::uuid1()->toString(),
             'name' => 'Administrator',
             'email' => 'admin@mail.com',
             'password' => Hash::make('12345678'),

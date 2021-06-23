@@ -19,4 +19,8 @@ class Currency extends Model
         'name',
         'exchange_rate',
     ];
+
+    protected $casts = [
+        'exchange_rate' => 'float'
+    ];
 }
