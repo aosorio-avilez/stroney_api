@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\Authenticable;
 use Tests\TestCase;
 
-class UpdateUserCurrencyTest extends TestCase
+class UpdateTest extends TestCase
 {
     use DatabaseTransactions, Authenticable;
 
