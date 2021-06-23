@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\User\Data;
+namespace Tests\Feature\Category\Data;
 
 use App\Models\Category;
 use App\Models\User;
