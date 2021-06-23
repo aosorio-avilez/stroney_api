@@ -33,4 +33,12 @@ class AccountRepositoryImpl extends BaseRepository implements AccountRepository
             ->where('id', $accountId)
             ->first();
     }
+
+    public function remove(string $accountId): bool
+    {
+        return $this->newQuery()
+            ->where('id', $accountId)
+            ->first()
+            ->delete();
+    }
 }

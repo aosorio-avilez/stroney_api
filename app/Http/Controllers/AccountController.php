@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use Features\Account\Domain\Usecases\CreateAccountUseCase;
 use Features\Account\Domain\Usecases\GetAccountUseCase;
+use Features\Account\Domain\Usecases\RemoveAccountUseCase;
 use Features\Account\Domain\Usecases\UpdateAccountUseCase;
 use Features\Account\Presentation\Transformers\AccountTransformer;
 use Features\Account\Presentation\Validators\CreateAccountValidator;
@@ -55,5 +56,17 @@ class AccountController extends Controller
         $resource = $this->fractal->makeItem($account, $accountTransformer);
 
         return jsonResponse(200, $resource->toArray());
+    }
+
+    public function remove(
+        string $accountId,
+        GetAccountUseCase $getAccountUseCase,
+        RemoveAccountUseCase $removeAccountUseCase
+    ): JsonResponse {
+        $account = $getAccountUseCase->handle($accountId);
+
+        $removeAccountUseCase->handle($account->id);
+
+        return jsonResponse(204);
     }
 }
