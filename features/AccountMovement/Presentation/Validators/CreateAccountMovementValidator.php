@@ -12,7 +12,7 @@ class CreateAccountMovementValidator extends BaseValidator
         return [
             'is_transfer' => 'required|boolean',
             'destination_account_id' => 'required_if:is_transfer,true|nullable',
-            'category_id' => 'required|nullable',
+            'category_id' => 'nullable',
             'amount' => 'required|numeric',
             'movement_type' => 'required|in:' . implode(',', MovementType::toValues()),
             'created_date' => 'required|date_format:Y-m-d',
@@ -27,7 +27,6 @@ class CreateAccountMovementValidator extends BaseValidator
             'is_transfer.required' => __('required', ['attribute' => 'is_transfer']),
             'is_transfer.boolean' => __('boolean', ['attribute' => 'is_transfer']),
             'destination_account_id.required_if' => __('required_if', ['attribute' => 'destination_account_id',]),
-            'category_id.required' => __('required', ['attribute' => 'category_id']),
             'amount.required' => __('required', ['attribute' => 'amount']),
             'amount.numeric' => __('numeric', ['attribute' => 'amount']),
             'movement_type.required' => __('required', ['attribute' => 'movement_type']),

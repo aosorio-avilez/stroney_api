@@ -42,6 +42,7 @@ class CreateAccountMovementUseCase
             $incomeMovement->movement_type = MovementType::income();
             $incomeMovement->account_id = $accountMovement->destination_account_id;
             $incomeMovement->destination_account_id = $accountMovement->account_id;
+            $incomeMovement->amount = ($incomeMovement->amount / $account->userCurrency->exchange_rate) * $destinationAccount->userCurrency->exchange_rate;
 
             $this->makeIncome($destinationAccount, $incomeMovement);
         } else {
@@ -62,11 +63,7 @@ class CreateAccountMovementUseCase
     private function makeExpense(Account $account, AccountMovement $accountMovement): AccountMovement
     {
         $account->amount = $account->amount - $accountMovement->amount;
-        // 1 dolar = 0.84 euros
-        // 1 dolar = 20.05 pesos
-        // 1 peso = 20.05 dolar
-        // 1 peso = 23.93 euros
-
+    
         $this->updateAccount($account);
         
         return $this->createMovement($accountMovement);

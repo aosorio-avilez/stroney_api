@@ -18,12 +18,10 @@ class UserCurrency extends Model
     protected $fillable = [
         'user_id',
         'currency_id',
-        'base_exchange_rate',
         'exchange_rate',
     ];
 
     protected $casts = [
-        'base_exchange_rate' => 'float',
         'exchange_rate' => 'float'
     ];
 

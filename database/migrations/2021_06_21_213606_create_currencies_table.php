@@ -17,8 +17,7 @@ class CreateCurrenciesTable extends Migration
             $table->uuid('id')->primary();
             $table->string('code');
             $table->string('name');
-            $table->decimal('base_exchange_rate');
-            $table->decimal('exchange_rate');
+            $table->decimal('exchange_rate', 10, 3);
             $table->timestamps();
         });
     }

@@ -68,7 +68,6 @@ class UpdateTest extends TestCase
                 'data' => [
                     'id',
                     'currency',
-                    'base_exchange_rate',
                     'exchange_rate',
                 ]
             ]);

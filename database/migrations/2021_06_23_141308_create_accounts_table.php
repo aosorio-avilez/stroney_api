@@ -24,7 +24,7 @@ class CreateAccountsTable extends Migration
                 ->references('id')
                 ->on('user_currencies');
             $table->string('name');
-            $table->decimal('amount')
+            $table->decimal('amount', 10, 3)
                 ->default(0.0);
             $table->text('notes')
                 ->nullable();

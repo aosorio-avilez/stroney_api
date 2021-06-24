@@ -34,7 +34,7 @@ class CreateAccountMovementsTable extends Migration
             $table->foreign('category_id')
                 ->references('id')
                 ->on('categories');
-            $table->decimal('amount');
+            $table->decimal('amount', 10, 3);
             $table->enum('movement_type', MovementType::toValues());
             $table->date('created_date');
             $table->time('created_time');

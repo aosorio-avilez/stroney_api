@@ -26,7 +26,6 @@ class UserCurrencyFactory extends Factory
         return [
             'user_id' => User::factory(),
             'currency_id' => Currency::factory(),
-            'base_exchange_rate' => $this->faker->numerify('#####'),
             'exchange_rate' => $this->faker->numerify('#####'),
         ];
     }
