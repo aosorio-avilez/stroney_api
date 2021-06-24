@@ -12,3 +12,6 @@ Route::put('/{accountId}', [AccountController::class, 'update']);
 Route::patch('/{accountId}/balance', [AccountController::class, 'adjustBalance']);
 
 Route::delete('/{accountId}', [AccountController::class, 'remove']);
+
+Route::prefix('/{accountId}/movements')
+    ->group(__DIR__ . '/account_movements.php');
