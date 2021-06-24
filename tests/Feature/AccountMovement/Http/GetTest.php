@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\Authenticable;
 use Tests\TestCase;
 
-class CreateTest extends TestCase
+class GetTest extends TestCase
 {
     use DatabaseTransactions, Authenticable;
 
@@ -22,26 +22,23 @@ class CreateTest extends TestCase
      * @group account-movements
      * @test
     */
-    public function shouldReturnCreatedWhenValidDataProvided()
+    public function shouldReturnOkWhenValidDataProvided()
     {
         // Arrange
         $account = Account::factory()->create();
-        $accountMovement = AccountMovement::factory()->make([
+        AccountMovement::factory()->create([
             'account_id' => $account->id
-        ]);
-        $data = array_merge($accountMovement->toArray(), [
-            'is_transfer' => false
         ]);
 
         // Act
         $response = $this->actingAs($this->user)
-            ->postJson("/api/accounts/$account->id/movements", $data);
+            ->getJson("/api/accounts/$account->id/movements");
         
         // Assert
         $response
-            ->assertStatus(201)
+            ->assertStatus(200)
             ->assertJsonStructure([
-                'data' => [
+                'data' =>[[
                     'account',
                     'destination_account',
                     'category',
@@ -50,7 +47,7 @@ class CreateTest extends TestCase
                     'created_date',
                     'created_time',
                     'notes',
-                ]
+                ]]
             ]);
     }
 }

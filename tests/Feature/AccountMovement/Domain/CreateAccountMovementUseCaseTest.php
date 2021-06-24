@@ -7,7 +7,6 @@ use App\Models\AccountMovement;
 use Features\Account\Domain\Repositories\AccountRepository;
 use Features\AccountMovement\Domain\Repositories\AccountMovementRepository;
 use Features\AccountMovement\Domain\Usecases\CreateAccountMovementUseCase;
-use Features\AccountMovement\Domain\Usecases\MakeAccountTransferUseCase;
 use Mockery;
 use Mockery\LegacyMockInterface;
 use Mockery\MockInterface;

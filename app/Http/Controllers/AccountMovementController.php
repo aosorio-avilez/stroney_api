@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AccountMovement;
 use Features\Account\Domain\Usecases\GetAccountUseCase;
 use Features\AccountMovement\Domain\Usecases\CreateAccountMovementUseCase;
+use Features\AccountMovement\Domain\Usecases\GetAccountMovementsByAccountUseCase;
 use Features\AccountMovement\Presentation\Transformers\AccountMovementTransformer;
 use Features\AccountMovement\Presentation\Validators\CreateAccountMovementValidator;
 use Features\Category\Domain\Usecases\GetCategoryUseCase;
@@ -44,5 +45,24 @@ class AccountMovementController extends Controller
         $resource = $this->fractal->makeItem($accountMovement, $accountMovementTransformer);
         
         return jsonResponse(201, $resource->toArray());
+    }
+
+    public function all(
+        string $accountId,
+        GetAccountUseCase $getAccountUseCase,
+        GetAccountMovementsByAccountUseCase $getAccountMovementsByAccountUseCase,
+        AccountMovementTransformer $accountMovementTransformer
+    ): JsonResponse {
+        $account = $getAccountUseCase->handle($accountId);
+
+        $movements = $getAccountMovementsByAccountUseCase->handle($account->id);
+
+        $resource = $this->fractal->makePagination(
+            $movements,
+            $accountMovementTransformer,
+            AccountMovement::paginate()
+        );
+
+        return jsonResponse(200, $resource->toArray());
     }
 }

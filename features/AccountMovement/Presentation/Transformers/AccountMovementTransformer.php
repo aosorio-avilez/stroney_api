@@ -22,18 +22,18 @@ class AccountMovementTransformer extends TransformerAbstract
     public function transform(AccountMovement $accountMovement)
     {
         return [
-            'account_id' => $this->fractal->makeItem(
+            'account' => $this->fractal->makeItem(
                 $accountMovement->account,
                 new AccountTransformer($this->fractal),
                 null
             ),
-            'destination_account_id' => $accountMovement->destinationAccount != null
+            'destination_account' => $accountMovement->destinationAccount != null
                 ? $this->fractal->makeItem(
                     $accountMovement->account,
                     new AccountTransformer($this->fractal),
                     null
                 ) : null,
-            'category_id' => $accountMovement->category != null
+            'category' => $accountMovement->category != null
                 ? $this->fractal->makeItem(
                     $accountMovement->category,
                     new CategoryTransformer,
