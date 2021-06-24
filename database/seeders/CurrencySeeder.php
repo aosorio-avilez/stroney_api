@@ -29,13 +29,13 @@ class CurrencySeeder extends Seeder
                 'id' => Uuid::uuid1()->toString(),
                 'code' => 'USD',
                 'name' => 'Dólar Estadounidense',
-                'exchange_rate' => 20.49,
+                'exchange_rate' => 0.050,
             ],
             [
                 'id' => Uuid::uuid1()->toString(),
                 'code' => 'EUR',
                 'name' => 'Euro',
-                'exchange_rate' => 24.42,
+                'exchange_rate' => 0.042,
             ]
         ]);
 

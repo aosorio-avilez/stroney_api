@@ -2,6 +2,8 @@
 
 use Features\Account\Data\Repositories\AccountRepositoryImpl;
 use Features\Account\Domain\Repositories\AccountRepository;
+use Features\AccountMovement\Data\Repositories\AccountMovementRepositoryImpl;
+use Features\AccountMovement\Domain\Repositories\AccountMovementRepository;
 use Features\Category\Data\Repositories\CategoryRepositoryImpl;
 use Features\Category\Domain\Repositories\CategoryRepository;
 use Features\Currency\Data\Repositories\CurrencyRepositoryImpl;
@@ -17,4 +19,5 @@ return [
     CurrencyRepository::class => CurrencyRepositoryImpl::class,
     UserCurrencyRepository::class => UserCurrencyRepositoryImpl::class,
     AccountRepository::class => AccountRepositoryImpl::class,
+    AccountMovementRepository::class => AccountMovementRepositoryImpl::class,
 ];
