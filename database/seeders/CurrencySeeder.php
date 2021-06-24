@@ -23,19 +23,22 @@ class CurrencySeeder extends Seeder
                 'id' => Uuid::uuid1()->toString(),
                 'code' => 'MXN',
                 'name' => 'Peso Mexicano',
+                'base_exchange_rate' => 1,
                 'exchange_rate' => 1
             ],
             [
                 'id' => Uuid::uuid1()->toString(),
                 'code' => 'USD',
                 'name' => 'Dólar Estadounidense',
-                'exchange_rate' => 20.49,
+                'base_exchange_rate' => 0.050,
+                'exchange_rate' => 20.03,
             ],
             [
                 'id' => Uuid::uuid1()->toString(),
                 'code' => 'EUR',
                 'name' => 'Euro',
-                'exchange_rate' => 24.42,
+                'base_exchange_rate' => 0.042,
+                'exchange_rate' => 23.90,
             ]
         ]);
 

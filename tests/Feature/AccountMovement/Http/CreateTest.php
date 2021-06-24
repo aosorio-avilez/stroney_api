@@ -36,7 +36,7 @@ class CreateTest extends TestCase
         // Act
         $response = $this->actingAs($this->user)
             ->postJson("/api/accounts/$account->id/movements", $data);
-        dd($response);
+        
         // Assert
         $response
             ->assertStatus(201)

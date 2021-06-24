@@ -24,6 +24,7 @@ class CurrencyFactory extends Factory
         return [
             'code' => $this->faker->currencyCode,
             'name' => $this->faker->name,
+            'base_exchange_rate' => $this->faker->numerify('##'),
             'exchange_rate' => $this->faker->numerify('##'),
         ];
     }

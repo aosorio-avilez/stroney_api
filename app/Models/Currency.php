@@ -17,10 +17,12 @@ class Currency extends Model
     protected $fillable = [
         'code',
         'name',
+        'base_exchange_rate',
         'exchange_rate',
     ];
 
     protected $casts = [
-        'exchange_rate' => 'float'
+        'base_exchange_rate' => 'float',
+        'exchange_rate' => 'float',
     ];
 }

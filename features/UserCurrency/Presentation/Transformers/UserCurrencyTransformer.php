@@ -26,6 +26,7 @@ class UserCurrencyTransformer extends TransformerAbstract
                 new CurrencyTransformer,
                 null
             ),
+            'base_exchange_rate' => $userCurrency->base_exchange_rate,
             'exchange_rate' => $userCurrency->exchange_rate,
         ];
     }

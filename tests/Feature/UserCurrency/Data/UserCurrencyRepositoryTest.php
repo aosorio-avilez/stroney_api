@@ -39,6 +39,7 @@ class UserCurrencyRepositoryTest extends TestCase
         $this->assertDatabaseHas('user_currencies', [
             'user_id' => $result->user_id,
             'currency_id' => $result->currency_id,
+            'base_exchange_rate' => $result->base_exchange_rate,
             'exchange_rate' => $result->exchange_rate,
         ]);
     }
@@ -100,6 +101,7 @@ class UserCurrencyRepositoryTest extends TestCase
             'id' => $userCurrencyToUpdate->id,
             'user_id' => $result->user_id,
             'currency_id' => $result->currency_id,
+            'base_exchange_rate' => $result->base_exchange_rate,
             'exchange_rate' => $result->exchange_rate,
         ]);
     }

@@ -23,6 +23,7 @@ class CreateUserCurrenciesTable extends Migration
             $table->foreign('currency_id')
                 ->references('id')
                 ->on('currencies');
+            $table->decimal('base_exchange_rate');
             $table->decimal('exchange_rate');
             $table->timestamps();
         });

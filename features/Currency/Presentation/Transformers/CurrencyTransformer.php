@@ -13,6 +13,7 @@ class CurrencyTransformer extends TransformerAbstract
             'id' => $currency->id,
             'code' => $currency->code,
             'name' => $currency->name,
+            'base_exchange_rate' => $currency->base_exchange_rate,
             'exchange_rate' => $currency->exchange_rate,
         ];
     }
