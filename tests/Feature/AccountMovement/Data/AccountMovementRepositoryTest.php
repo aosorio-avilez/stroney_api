@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\AccountMovement\Data;
 
+use App\Models\Account;
 use App\Models\AccountMovement;
 use Features\AccountMovement\Data\Repositories\AccountMovementRepositoryImpl;
 use Features\AccountMovement\Domain\Repositories\AccountMovementRepository;
@@ -45,5 +46,28 @@ class AccountMovementRepositoryTest extends TestCase
             'created_time' => $result->created_time,
             'notes' => $result->notes,
         ]);
+    }
+
+    /**
+     * @group account-movements
+     * @test
+    */
+    public function getByAccountShouldReturnAccountMovementsFromDatabase()
+    {
+        // Arrange
+        $account = Account::factory()->create();
+        AccountMovement::factory()
+            ->count(10)
+            ->create([
+                'account_id' => $account->id
+            ]);
+
+        // Act
+        $result = $this->repository->getByAccount($account->id);
+        
+        // Assert
+        $this->assertNotNull($result);
+        $this->assertNotEmpty($result);
+        $this->assertCount(10, $result);
     }
 }
