@@ -32,4 +32,12 @@ class EnvelopeRepositoryImpl extends BaseRepository implements EnvelopeRepositor
             ->where('id', $envelopeId)
             ->first();
     }
+
+    public function remove(string $envelopeId): bool
+    {
+        return $this->newQuery()
+            ->where('id', $envelopeId)
+            ->first()
+            ->delete();
+    }
 }
