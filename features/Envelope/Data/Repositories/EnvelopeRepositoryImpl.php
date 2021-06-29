@@ -18,4 +18,18 @@ class EnvelopeRepositoryImpl extends BaseRepository implements EnvelopeRepositor
     {
         return $this->createOrUpdate($envelope->getAttributes());
     }
+
+    public function update(string $envelopeId, Envelope $envelope): Envelope
+    {
+        return $this->createOrUpdate($envelope->getAttributes(), [
+            'id' => $envelopeId
+        ]);
+    }
+
+    public function getById(string $envelopeId): ?Envelope
+    {
+        return $this->newQuery()
+            ->where('id', $envelopeId)
+            ->first();
+    }
 }
