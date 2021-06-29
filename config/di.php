@@ -8,6 +8,8 @@ use Features\Category\Data\Repositories\CategoryRepositoryImpl;
 use Features\Category\Domain\Repositories\CategoryRepository;
 use Features\Currency\Data\Repositories\CurrencyRepositoryImpl;
 use Features\Currency\Domain\Repositories\CurrencyRepository;
+use Features\Envelope\Data\Repositories\EnvelopeRepositoryImpl;
+use Features\Envelope\Domain\Repositories\EnvelopeRepository;
 use Features\UserCurrency\Data\Repositories\UserCurrencyRepositoryImpl;
 use Features\User\Data\Repositories\UserRepositoryImpl;
 use Features\UserCurrency\Domain\Repositories\UserCurrencyRepository;
@@ -20,4 +22,5 @@ return [
     UserCurrencyRepository::class => UserCurrencyRepositoryImpl::class,
     AccountRepository::class => AccountRepositoryImpl::class,
     AccountMovementRepository::class => AccountMovementRepositoryImpl::class,
+    EnvelopeRepository::class => EnvelopeRepositoryImpl::class,
 ];

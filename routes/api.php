@@ -27,3 +27,7 @@ Route::prefix('/currencies')
 Route::prefix('/accounts')
     ->middleware('auth:sanctum')
     ->group(__DIR__ . '/api/accounts.php');
+
+Route::prefix('/envelopes')
+    ->middleware('auth:sanctum')
+    ->group(__DIR__ . '/api/envelopes.php');
