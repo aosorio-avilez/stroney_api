@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\AccountMovement;
@@ -26,7 +25,7 @@ class AccountMovementController extends Controller
         $attributes = $createAccountMovementValidator->validate($request->all());
 
         $account = $getAccountUseCase->handle($accountId);
-        
+
         if ($attributes['category_id'] != null) {
             $getCategoryUseCase->handle($attributes['category_id']);
         }
@@ -43,7 +42,7 @@ class AccountMovementController extends Controller
         );
 
         $resource = $this->fractal->makeItem($accountMovement, $accountMovementTransformer);
-        
+
         return jsonResponse(201, $resource->toArray());
     }
 
