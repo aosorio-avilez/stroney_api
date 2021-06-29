@@ -10,4 +10,6 @@ interface EnvelopeRepository
     public function update(string $envelopeId, Envelope $envelope): Envelope;
 
     public function getById(string $envelopeId): ?Envelope;
+
+    public function remove(string $envelopeId): bool;
 }

@@ -84,4 +84,23 @@ class EnvelopeRepositoryTest extends TestCase
         // Assert
         $this->assertNotNull($result);
     }
+
+    /**
+    * @group envelopes
+    * @test
+    */
+    public function removeShouldDeleteAccountFromDatabase()
+    {
+        // Arrange
+        $envelope = Envelope::factory()->create();
+
+        // Act
+        $result = $this->repository->remove($envelope->id);
+
+        // Assert
+        $this->assertTrue($result);
+        $this->assertDatabaseMissing('envelopes', [
+            'id' => $envelope->id
+        ]);
+    }
 }
