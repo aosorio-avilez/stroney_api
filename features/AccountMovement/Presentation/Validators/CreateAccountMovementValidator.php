@@ -1,5 +1,4 @@
 <?php
-
 namespace Features\AccountMovement\Presentation\Validators;
 
 use Features\AccountMovement\Data\Models\MovementType;
@@ -26,7 +25,7 @@ class CreateAccountMovementValidator extends BaseValidator
         return [
             'is_transfer.required' => __('required', ['attribute' => 'is_transfer']),
             'is_transfer.boolean' => __('boolean', ['attribute' => 'is_transfer']),
-            'destination_account_id.required_if' => __('required_if', ['attribute' => 'destination_account_id',]),
+            'destination_account_id.required_if' => __('required_if', ['attribute' => 'destination_account_id', ]),
             'amount.required' => __('required', ['attribute' => 'amount']),
             'amount.numeric' => __('numeric', ['attribute' => 'amount']),
             'movement_type.required' => __('required', ['attribute' => 'movement_type']),

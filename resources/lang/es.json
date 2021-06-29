@@ -27,5 +27,6 @@
     "user_currency_already_exists": "La moneda ya existe",
     "user_currency_not_found": "La moneda no existe",
     "account_not_found": "La cuenta no existe",
-    "envelope_not_found": "El sobre no existe"
+    "envelope_not_found": "El sobre no existe",
+    "envelope_transfer": "Transferencia hacia el sobre :envelope"
 }
