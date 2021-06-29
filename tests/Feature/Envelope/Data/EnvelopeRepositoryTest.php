@@ -43,4 +43,45 @@ class EnvelopeRepositoryTest extends TestCase
             'notes' => $result->notes,
         ]);
     }
+
+    /**
+     * @group envelopes
+     * @test
+    */
+    public function updateShouldUpdateInDatabase()
+    {
+        // Arrange
+        $envelopeToUpdate = Envelope::factory()->create();
+        $envelope = Envelope::factory()->make();
+
+        // Act
+        $result = $this->repository->update($envelopeToUpdate->id, $envelope);
+
+        // Assert
+        $this->assertNotNull($result);
+        $this->assertDatabaseHas('envelopes', [
+            'id' => $envelopeToUpdate->id,
+            'name' => $result->name,
+            'amount' => $result->amount,
+            'target_amount' => $result->target_amount,
+            'target_reached' => $result->target_reached,
+            'notes' => $result->notes,
+        ]);
+    }
+
+    /**
+     * @group envelopes
+     * @test
+    */
+    public function getByIdShouldReturnFromDatabase()
+    {
+        // Arrange
+        $envelope = Envelope::factory()->create();
+
+        // Act
+        $result = $this->repository->getById($envelope->id);
+
+        // Assert
+        $this->assertNotNull($result);
+    }
 }
