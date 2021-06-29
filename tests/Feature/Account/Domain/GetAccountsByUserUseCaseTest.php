@@ -1,5 +1,4 @@
 <?php
-
 namespace Tests\Feature\Account\Domain;
 
 use App\Models\Account;
@@ -35,7 +34,7 @@ class GetAccountsByUserUseCaseTest extends TestCase
      * @group accounts
      * @test
     */
-    public function shouldReturnCategories()
+    public function shouldReturnEnvelopes()
     {
         // Arrange
         $userId = Uuid::uuid1()->toString();

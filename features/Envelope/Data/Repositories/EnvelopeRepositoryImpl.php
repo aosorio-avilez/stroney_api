@@ -5,6 +5,7 @@ use App\Models\Envelope;
 use Features\Core\Framework\Base\BaseRepository;
 use Features\Envelope\Domain\Repositories\EnvelopeRepository;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Enumerable;
 
 class EnvelopeRepositoryImpl extends BaseRepository implements EnvelopeRepository
 {
@@ -39,5 +40,12 @@ class EnvelopeRepositoryImpl extends BaseRepository implements EnvelopeRepositor
             ->where('id', $envelopeId)
             ->first()
             ->delete();
+    }
+
+    public function getByUser(string $userId): Enumerable
+    {
+        return $this->newQuery()
+            ->where('user_id', $userId)
+            ->get();
     }
 }
