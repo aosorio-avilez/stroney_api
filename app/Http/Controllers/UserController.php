@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -7,6 +6,8 @@ use Features\Account\Domain\Usecases\GetAccountsByUserUseCase;
 use Features\Account\Presentation\Transformers\AccountTransformer;
 use Features\Category\Domain\Usecases\GetCategoriesByUserUseCase;
 use Features\Category\Presentation\Transformers\CategoryTransformer;
+use Features\Envelope\Domain\Usecases\GetEnvelopesByUserUseCase;
+use Features\Envelope\Presentation\Transformers\EnvelopeTransformer;
 use Features\User\Presentation\Validators\AuthValidator;
 use Features\User\Domain\Usecases\AuthenticateUseCase;
 use Features\User\Domain\Usecases\CreateUserUseCase;
@@ -74,11 +75,11 @@ class UserController extends Controller
         UserTransformer $userTransformer
     ): JsonResponse {
         $attributes = $updateUserValidator->validate($request->all());
-        
+
         $user = $getUserUseCase->handle($userId);
         $user->setRawAttributes($attributes);
         $user->setAttribute('id', $userId);
-        
+
         $image = $attributes['image'] ?? null;
         $user = $updateUserUseCase->handle($user, $image);
 
@@ -142,6 +143,21 @@ class UserController extends Controller
         $accounts = $getAccountsByUserUseCase->handle($user->id);
 
         $resource = $this->fractal->makeCollection($accounts, $accountTransformer);
+
+        return jsonResponse(200, $resource->toArray());
+    }
+
+    public function envelopes(
+        string $userId,
+        GetUserUseCase $getUserUseCase,
+        GetEnvelopesByUserUseCase $getEnvelopesByUserUseCase,
+        EnvelopeTransformer $envelopeTransformer
+    ): JsonResponse {
+        $user = $getUserUseCase->handle($userId);
+
+        $envelopes = $getEnvelopesByUserUseCase->handle($user->id);
+
+        $resource = $this->fractal->makeCollection($envelopes, $envelopeTransformer);
 
         return jsonResponse(200, $resource->toArray());
     }

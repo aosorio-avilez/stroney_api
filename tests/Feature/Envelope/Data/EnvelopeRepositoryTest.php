@@ -2,6 +2,7 @@
 namespace Tests\Feature\Envelope\Data;
 
 use App\Models\Envelope;
+use App\Models\User;
 use Features\Envelope\Data\Repositories\EnvelopeRepositoryImpl;
 use Features\Envelope\Domain\Repositories\EnvelopeRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -102,5 +103,28 @@ class EnvelopeRepositoryTest extends TestCase
         $this->assertDatabaseMissing('envelopes', [
             'id' => $envelope->id
         ]);
+    }
+
+    /**
+    * @group envelopes
+    * @test
+    */
+    public function getByUserShouldReturnUserEnvelopesFromDatabase()
+    {
+        // Arrange
+        $user = User::factory()->create();
+        Envelope::factory()
+            ->count(10)
+            ->create([
+                'user_id' => $user->id
+            ]);
+
+        // Act
+        $result = $this->repository->getByUser($user->id);
+
+        // Assert
+        $this->assertNotNull($result);
+        $this->assertNotEmpty($result);
+        $this->assertCount(10, $result);
     }
 }

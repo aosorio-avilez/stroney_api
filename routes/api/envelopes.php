@@ -9,4 +9,6 @@ Route::put('{envelopeId}', [EnvelopeController::class, 'update']);
 
 Route::delete('{envelopeId}', [EnvelopeController::class, 'remove']);
 
+Route::get('{envelopeId}', [EnvelopeController::class, 'get']);
+
 Route::patch('{envelopeId}/transfer', [EnvelopeController::class, 'transfer']);

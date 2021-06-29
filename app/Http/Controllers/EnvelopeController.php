@@ -105,4 +105,16 @@ class EnvelopeController extends Controller
 
         return jsonResponse(200, $resource->toArray());
     }
+
+    public function get(
+        string $accountId,
+        GetEnvelopeUseCase $getEnvelopeUseCase,
+        EnvelopeTransformer $envelopeTransformer
+    ): JsonResponse {
+        $account = $getEnvelopeUseCase->handle($accountId);
+
+        $resource = $this->fractal->makeItem($account, $envelopeTransformer);
+
+        return jsonResponse(200, $resource->toArray());
+    }
 }

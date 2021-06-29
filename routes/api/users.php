@@ -11,15 +11,17 @@ Route::patch('/email/{email}/temporal-password', [UserController::class, 'sendTe
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/revoke-access', [UserController::class, 'revokeAccess']);
-    
+
     Route::put('/{userId}', [UserController::class, 'update']);
-    
+
     Route::patch('/{userId}/password', [UserController::class, 'updatePassword']);
-    
+
     Route::get('/{userId}/categories', [UserController::class, 'categories']);
-    
+
     Route::get('/{userId}/accounts', [UserController::class, 'accounts']);
-    
+
+    Route::get('/{userId}/envelopes', [UserController::class, 'envelopes']);
+
     Route::prefix('/{userId}/currencies')
         ->group(__DIR__ . '/user_currencies.php');
 });
